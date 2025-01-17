@@ -1,13 +1,39 @@
 import mongoose, { Schema, Types, Document } from 'mongoose';
 
+// Reaction subdocument interface
+interface IReaction {
+    reactionBody: string;
+    username: string;
+    createdAt: Date;
+}
+
+// Thought interface
 interface IThought extends Document {
     thoughtText: string;
     createdAt: Date;
     username: string;
-    reactions: mongoose.Types.Array<any>;
+    reactions: Types.Array<IReaction>;
     reactionCount: number;
 }
 
+// Reaction schema
+const reactionSchema = new Schema<IReaction>({
+    reactionBody: {
+        type: String,
+        required: true,
+        maxlength: 280,
+    },
+    username: {
+        type: String,
+        required: true,
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
+});
+
+// Thought schema
 const thoughtSchema = new Schema<IThought>({
     thoughtText: {
         type: String,
@@ -23,13 +49,10 @@ const thoughtSchema = new Schema<IThought>({
         type: String,
         required: true,
     },
-    reactions: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Reaction',
-    }],
+    reactions: [reactionSchema], // Embed reactionSchema
 });
 
-thoughtSchema.virtual('reactionCount').get(function(this: IThought) {
+thoughtSchema.virtual('reactionCount').get(function (this: IThought) {
     return this.reactions.length;
 });
 

@@ -1,19 +1,19 @@
-export const userSeedData = [
+export const usersSeedData = [
     {
-      username: 'johndoe',
-      email: 'johndoe@example.com',
+      username: 'rickwubbalubba',
+      email: 'ricksanchez@rick-morty.com',
       thoughts: [],
       friends: [],
     },
     {
-      username: 'janedoe',
-      email: 'janedoe@example.com',
+      username: 'mortyglorpazorpfield',
+      email: 'morty-smith@rick-morty.com',
       thoughts: [],
       friends: [],
     },
     {
-      username: 'coder123',
-      email: 'coder123@example.com',
+      username: 'sumsum',
+      email: 'summer@summer.com',
       thoughts: [],
       friends: [],
     },

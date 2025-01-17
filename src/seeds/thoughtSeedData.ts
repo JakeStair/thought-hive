@@ -1,25 +1,25 @@
-export const thoughtSeedData = [
+export const thoughtsSeedData = [
     {
-      thoughtText: 'This is my first thought!',
-      username: 'johndoe',
+      thoughtText: 'I just saw this movie, and I was like...whoa.... Has anyone seen the little indie film Star Wars',
+      username: 'rickwubbalubba',
       reactions: [
         {
-          reactionBody: 'Great thought!',
-          username: 'janedoe',
+          reactionBody: 'Tried this new green slime from planet Sloopy Noopers, that is all.',
+          username: 'rickwubbalubba',
         },
         {
-          reactionBody: 'Interesting perspective.',
-          username: 'coder123',
+          reactionBody: 'Just kicked my friend Laura out of this world, try the soda.',
+          username: 'sumsum',
         },
       ],
     },
     {
-      thoughtText: 'Loving the flexibility of MongoDB.',
-      username: 'janedoe',
+      thoughtText: 'You know, I do not know man, but yeah.',
+      username: 'mortyglorpazorpfield',
       reactions: [
         {
-          reactionBody: 'Totally agree!',
-          username: 'johndoe',
+          reactionBody: 'Ok man, no more adventures, I am done, do not call me!',
+          username: 'mortyglorpazorpfield',
         },
       ],
     },

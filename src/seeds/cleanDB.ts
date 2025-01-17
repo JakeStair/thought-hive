@@ -1,8 +1,8 @@
-import mongoose from 'mongoose';
+
 import User from '../models/User';
 import Thought from '../models/Thought';
 
-const cleanDB = async () => {
+const cleanTheDB = async (): Promise<void> => {
   try {
     console.log('Cleaning database...');
     await User.deleteMany({});
@@ -10,7 +10,8 @@ const cleanDB = async () => {
     console.log('Database cleaned successfully!');
   } catch (err) {
     console.error('Error cleaning database:', err);
+    process.exit(1);
   }
 };
 
-export default cleanDB;
+export default cleanTheDB;

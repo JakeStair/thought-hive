@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { ObjectId } from 'mongodb';
+
 import User from '../models/User.js';
 
 export const createUser = async (req: Request, res: Response) => {
@@ -11,7 +11,7 @@ export const createUser = async (req: Request, res: Response) => {
     }
 };
 
-export const getAllUsers = async (req: Request, res: Response) => {
+export const getAllUsers = async (_req: Request, res: Response) => {
     try {
         const users = await User.find().populate('thoughts').populate('friends');
         res.status(200).json(users)

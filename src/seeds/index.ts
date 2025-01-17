@@ -1,44 +1,33 @@
-import mongoose from 'mongoose';
-import cleanDB from './cleanDB';
+import db from '../config/connection';
 import User from '../models/User';
 import Thought from '../models/Thought';
-import { userSeedData } from './userSeedData';
-import { thoughtSeedData } from './thoughtSeedData';
+import cleanTheDB from './cleanDB';
+import { thoughtsSeedData } from './thoughtSeedData';
+import { usersSeedData } from './userSeedData';
 
 const seedDatabase = async () => {
-  try {
-    // Connect to MongoDB
-    await mongoose.connect('mongodb://127.0.0.1:27017/socialNetworkDB', {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    try {
+        await db();
+        await cleanTheDB();
+        const thoughts = await Thought.insertMany(thoughtsSeedData);
+        const users = usersSeedData.map((user) => {
+            const userThoughts = thoughts
+                .filter((thought) => thought.username === user.username)
+                .map((thought) => thought._id);
 
-    console.log('Connected to the database.');
+            return {
+                ...user,
+                thoughts: userThoughts,
+            };
+        });
+        await User.insertMany(users);
 
-    // Clean the database
-    await cleanDB();
-
-    // Seed users
-    const users = await User.insertMany(userSeedData);
-    console.log(`${users.length} users seeded successfully!`);
-
-    // Seed thoughts
-    const thoughtsWithUser = thoughtSeedData.map((thought) => {
-      const user = users.find((u) => u.username === thought.username);
-      if (user) {
-        user.thoughts.push(thought);
-      }
-      return thought;
-    });
-    const thoughts = await Thought.insertMany(thoughtsWithUser);
-    console.log(`${thoughts.length} thoughts seeded successfully!`);
-
-    console.log('Seeding completed!');
-    process.exit(0);
-  } catch (err) {
-    console.error('Error seeding the database:', err);
-    process.exit(1);
-  }
+        console.log('Seeding complete!');
+        process.exit(0);
+    } catch (err) {
+        console.error('Error seeding the database:', err);
+        process.exit(1);
+    }
 };
 
 seedDatabase();
