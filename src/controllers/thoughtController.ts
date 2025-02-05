@@ -20,3 +20,16 @@ export const getAllThoughts = async (_req: Request, res: Response) => {
         res.status(500).json(err);
     }
 };
+
+export const deleteThought = async (req: Request, res: Response) => {
+    try {
+        const thought = await Thought.findByIdAndDelete(req.params.thoughtId);
+        if (!thought) {
+            res.status(404).json({ message: 'Thought not found' });
+            return
+        }
+        res.status(200).json({ message: 'Thought deleted' });
+    } catch (err) {
+        res.status(500).json(err);
+    }
+};

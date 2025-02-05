@@ -5,6 +5,7 @@ const router = Router();
 
 router.route('/')
 .get(thoughtController.getAllThoughts)
-.post(thoughtController.createAThought);
+.post(thoughtController.createAThought)
+.delete(thoughtController.deleteThought);
 
 export default router;

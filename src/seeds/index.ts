@@ -1,4 +1,4 @@
-import db from '../config/connection';
+import db from '../config/connection.js';
 import User from '../models/User';
 import Thought from '../models/Thought';
 import cleanTheDB from './cleanDB';
