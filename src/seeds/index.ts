@@ -1,9 +1,9 @@
 import db from '../config/connection.js';
-import User from '../models/User';
-import Thought from '../models/Thought';
-import cleanTheDB from './cleanDB';
-import { thoughtsSeedData } from './thoughtSeedData';
-import { usersSeedData } from './userSeedData';
+import User from '../models/User.js';
+import Thought from '../models/Thought.js';
+import cleanTheDB from './cleanDB.js';
+import { thoughtsSeedData } from './thoughtSeedData.js';
+import { usersSeedData } from './userSeedData.js';
 
 const seedDatabase = async () => {
     try {

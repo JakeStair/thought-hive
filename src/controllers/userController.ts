@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import Thought from '../models/Thought.js';
 
 import User from '../models/User.js';
 
@@ -53,7 +54,48 @@ export const deleteUser = async (req: Request, res: Response) => {
             res.status(404).json({ message: 'User not found' });
             return
         }
+        await Thought.deleteMany({ username: user.username });
+
         res.status(200).json({ message: 'User deleted' });
+    } catch (err) {
+        res.status(500).json(err);
+    }
+};
+
+export const addFriend = async (req: Request, res: Response) => {
+    try {
+        const user = await User.findByIdAndUpdate(
+            req.params.userId,
+            { $addToSet: { friends: req.params.friendId } },  // Prevents duplicate friends
+            { new: true }
+        ).populate('friends');
+
+        if (!user) {
+            res.status(404).json({ message: 'User not found' });
+            return;
+        }
+
+        res.status(200).json(user);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+};
+
+
+export const removeFriend = async (req: Request, res: Response) => {
+    try {
+        const user = await User.findByIdAndUpdate(
+            req.params.userId,
+            { $pull: { friends: req.params.friendId } },
+            { new: true }
+        ).populate('friends');
+
+        if (!user) {
+            res.status(404).json({ message: 'User not found' });
+            return;
+        }
+
+        res.status(200).json(user);
     } catch (err) {
         res.status(500).json(err);
     }
